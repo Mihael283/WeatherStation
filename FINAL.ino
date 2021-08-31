@@ -1,13 +1,14 @@
+  
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <WiFiClient.h>
 #include "DHT.h"
 #include <Wire.h>
 
-const char* ssid     = "Husein-kapetan Gradascevic";
-const char* password = "ProbijGaSpicom";
+const char* ssid     = "Spanovic";
+const char* password = "aezakmi115";
 
-const char* serverName = "http://192.168.0.41/post-data.php";
+const char* serverName = "http://192.168.1.13/post-data.php";
 
 String apiKeyValue = "tPmAT5Ab3j7F9";
 
@@ -16,12 +17,10 @@ String sensorLocation = "Room1";
 
 #define DHTPIN 2     
 #define DHTTYPE DHT11   // DHT 11
-#define SEALEVELPRESSURE_HPA (1013.25)
 DHT dht(DHTPIN, DHTTYPE);
 
 void setup() {
   Serial.begin(115200);
-  
   WiFi.begin(ssid, password);
   Serial.println("Connecting");
   while(WiFi.status() != WL_CONNECTED) { 
@@ -39,8 +38,8 @@ void setup() {
 void loop() {
   if(WiFi.status()== WL_CONNECTED){
     HTTPClient http;
-    
-    http.begin(serverName);
+    WiFiClient wifi;
+    http.begin(wifi,serverName);
     
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
     
